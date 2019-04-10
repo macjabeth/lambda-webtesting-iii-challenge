@@ -1,7 +1,6 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
-import { render, fireEvent, waitForElement } from 'react-testing-library';
-import 'react-testing-library/cleanup-after-each';
+import { render, fireEvent } from 'react-testing-library';
 
 import Dashboard from './Dashboard';
 
@@ -11,33 +10,33 @@ describe('<Dashboard />', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('displays correct gate text and classes', async () => {
+  it('displays correct gate text and classes', () => {
     const { getByText } = render(<Dashboard />);
 
-    const openPanel = await waitForElement(() => getByText('Open'));
+    const openPanel = getByText('Open');
     expect(openPanel.classList).toContain('green-led');
 
-    const unlockedPanel = await waitForElement(() => getByText('Unlocked'));
+    const unlockedPanel = getByText('Unlocked');
     expect(unlockedPanel.classList).toContain('green-led');
 
-    const closeBtn = await waitForElement(() => getByText('Close Gate'));
+    const closeBtn = getByText('Close Gate');
     fireEvent.click(closeBtn);
     expect(openPanel.textContent).toBe('Closed');
     expect(openPanel.classList).toContain('red-led');
 
-    const lockBtn = await waitForElement(() => getByText('Lock Gate'));
+    const lockBtn = getByText('Lock Gate');
     fireEvent.click(lockBtn);
     expect(unlockedPanel.textContent).toBe('Locked');
     expect(unlockedPanel.classList).toContain('red-led');
   });
 
-  it('enables/disables buttons correctly for each status', async () => {
+  it('enables/disables buttons correctly for each status', () => {
     const { getByText } = render(<Dashboard />);
 
-    const closeBtn = await waitForElement(() => getByText('Close Gate'));
+    const closeBtn = getByText('Close Gate');
     expect(closeBtn.disabled).toBeFalsy();
 
-    const lockBtn = await waitForElement(() => getByText('Lock Gate'));
+    const lockBtn = getByText('Lock Gate');
     expect(lockBtn.disabled).toBeTruthy();
 
     fireEvent.click(closeBtn);
