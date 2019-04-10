@@ -15,11 +15,9 @@ describe('<Dashboard />', () => {
     const { getByText } = render(<Dashboard />);
 
     const openPanel = await waitForElement(() => getByText('Open'));
-    expect(openPanel.textContent).toBe('Open');
     expect(openPanel.classList).toContain('green-led');
 
     const unlockedPanel = await waitForElement(() => getByText('Unlocked'));
-    expect(unlockedPanel.textContent).toBe('Unlocked');
     expect(unlockedPanel.classList).toContain('green-led');
 
     const closeBtn = await waitForElement(() => getByText('Close Gate'));
