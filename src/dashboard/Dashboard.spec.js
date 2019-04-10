@@ -32,4 +32,19 @@ describe('<Dashboard />', () => {
     expect(unlockedPanel.textContent).toBe('Locked');
     expect(unlockedPanel.classList).toContain('red-led');
   });
+
+  it('enables/disables buttons correctly for each status', async () => {
+    const { getByText } = render(<Dashboard />);
+
+    const closeBtn = await waitForElement(() => getByText('Close Gate'));
+    expect(closeBtn.disabled).toBeFalsy();
+
+    const lockBtn = await waitForElement(() => getByText('Lock Gate'));
+    expect(lockBtn.disabled).toBeTruthy();
+
+    fireEvent.click(closeBtn);
+    expect(lockBtn.disabled).toBeFalsy();
+    fireEvent.click(lockBtn);
+    expect(closeBtn.disabled).toBeTruthy();
+  });
 });
